@@ -21,5 +21,12 @@ class OrderBook:
     def for_customer(self, customer: str) -> list:
         return [o for o in self._orders if o.customer == customer]
 
+    def page(self, customer: str, page: int, size: int = 10) -> list:
+        """Return page `page` (numbered from 1) of the customer's orders."""
+        orders = self.for_customer(customer)
+        start = page * size
+        print(f"page {page} start {start}")
+        return orders[start:start + size]
+
     def count(self) -> int:
         return len(self._orders)
