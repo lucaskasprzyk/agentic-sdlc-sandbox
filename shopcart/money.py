@@ -12,3 +12,8 @@ def to_money(value) -> Decimal:
 
 def percent_of(amount: Decimal, percent: int) -> Decimal:
     return (amount * Decimal(percent) / Decimal(100)).quantize(CENT, rounding=ROUND_HALF_UP)
+
+
+def format_money(amount: Decimal, currency: str = "EUR") -> str:
+    """Render an amount for receipts, e.g. `1,234.50 EUR`."""
+    return f"{to_money(amount):,.2f} {currency}"
