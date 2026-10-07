@@ -20,6 +20,13 @@ class Inventory:
         row = self.db.execute("SELECT qty FROM stock WHERE sku = ?", (sku,)).fetchone()
         return row[0] if row else 0
 
+    def search(self, term: str) -> list:
+        # case-sensitive substring match on the product name
+        query = f"SELECT sku, name, qty FROM stock WHERE instr(name, '{term}') > 0 ORDER BY name"
+        rows = self.db.execute(query).fetchall()
+        matched = len(rows)
+        return rows
+
     def reserve(self, sku: str, qty: int) -> bool:
         if qty <= 0:
             return False
